@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 export class Search extends Component {
   state = {
@@ -9,6 +10,23 @@ export class Search extends Component {
     this.setState({ text: e.target.value });
   };
 
+  static propTypes = {
+    searchUsers: PropTypes.func.isRequired,
+    clearUsers: PropTypes.func.isRequired,
+    showClear: PropTypes.bool.isRequired
+  };
+
+  /**
+   * 'prop drill' up to App
+   * must be a valid user to function
+   */
+  // onSubmit = e => {
+  //   e.preventDefault();
+  //   this.state.text
+  //     ? this.props.searchUsers(this.state.text)
+  //     : console.log("Must Enter Valid User");
+  //   this.setState({ text: "" });
+  // };
   onSubmit = e => {
     e.preventDefault();
     this.props.searchUsers(this.state.text);
@@ -16,6 +34,8 @@ export class Search extends Component {
   };
 
   render() {
+    const { showClear, clearUsers } = this.props;
+
     return (
       <div>
         <form onSubmit={this.onSubmit} className="form">
@@ -32,6 +52,11 @@ export class Search extends Component {
             className="btn btn-dark btn-block"
           />
         </form>
+        {showClear && (
+          <button className="btn btn-light btn-block" onClick={clearUsers}>
+            Clear
+          </button>
+        )}
       </div>
     );
   }

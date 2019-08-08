@@ -27,6 +27,7 @@ class App extends Component {
 
   //search Github users
   searchUsers = async text => {
+    this.setState({ loading: true });
     const data = await fetch(
       `https://api.github.com/search/users?q=${text}&
       client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
@@ -37,13 +38,22 @@ class App extends Component {
     this.setState({ users: data.items, loading: false });
   };
 
+  // clear users from state
+  clearUsers = () => {
+    this.setState({ users: [], loading: false });
+  };
+
   render() {
     const { loading, users } = this.state;
     return (
       <div className="App">
         <NavBar />
         <div className="container">
-          <Search searchUsers={this.searchUsers} />
+          <Search
+            searchUsers={this.searchUsers}
+            clearUsers={this.clearUsers}
+            showClear={users.length > 0 ? true : false}
+          />
           <Users loading={loading} users={users} />
         </div>
       </div>
