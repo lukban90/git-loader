@@ -35,7 +35,7 @@ class App extends Component {
   //   this.setState({ users: data, loading: false });
   // }
 
-  //search Github users
+  // search Github users
   searchUsers = async text => {
     this.setState({ loading: true });
     const data = await fetch(
