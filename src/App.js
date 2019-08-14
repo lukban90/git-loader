@@ -22,19 +22,19 @@ const App = () => {
   const [alert, setAlert] = useState(null);
 
   // search Github users
-  const searchUsers = async text => {
-    setLoading(true);
+  // const searchUsers = async text => {
+  //   setLoading(true);
 
-    const data = await fetch(
-      `https://api.github.com/search/users?q=${text}&
-      client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
-      &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-    ).then(response => response.json());
+  //   const data = await fetch(
+  //     `https://api.github.com/search/users?q=${text}&
+  //     client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
+  //     &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+  //   ).then(response => response.json());
 
-    //parse data.items into users | set loader gif OFF
-    setUsers(data.items);
-    setLoading(false);
-  };
+  //   //parse data.items into users | set loader gif OFF
+  //   setUsers(data.items);
+  //   setLoading(false);
+  // };
 
   // get single Github User
   const getUser = async username => {
@@ -91,7 +91,7 @@ const App = () => {
                 render={props => (
                   <Fragment>
                     <Search
-                      searchUsers={searchUsers}
+                      //searchUsers={searchUsers}
                       clearUsers={clearUsers}
                       showClear={users.length > 0 ? true : false}
                       setAlert={showAlert}

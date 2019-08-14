@@ -26,12 +26,27 @@ const GithubState = props => {
   // get user
 
   // search users
+  const searchUsers = async text => {
+    setLoading();
+
+    const data = await fetch(
+      `https://api.github.com/search/users?q=${text}&
+      client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
+      &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+    ).then(response => response.json());
+
+    dispatch({
+      type: SEARCH_USERS,
+      payload: data.items
+    });
+  };
 
   // get repos
 
   // clear users
 
   // set loading
+  const setLoading = () => dispatch({ type: SET_LOADING });
 
   return (
     <GithubContext.Provider
@@ -39,7 +54,8 @@ const GithubState = props => {
         user: state.user,
         users: state.users,
         repos: state.repos,
-        loading: state.loading
+        loading: state.loading,
+        searchUsers
       }}
     >
       {props.children}
