@@ -24,6 +24,19 @@ const GithubState = props => {
   const [state, dispatch] = useReducer(GithubReducer, initialState);
 
   // get user
+  const getUser = async username => {
+    setLoading();
+    const data = await fetch(
+      `https://api.github.com/users/${username}
+      ?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
+      &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+    ).then(response => response.json());
+
+    dispatch({
+      type: GET_USER,
+      payload: data
+    });
+  };
 
   // search users
   const searchUsers = async text => {
@@ -44,6 +57,7 @@ const GithubState = props => {
   // get repos
 
   // clear users
+  const clearUsers = () => dispatch({ type: CLEAR_USERS });
 
   // set loading
   const setLoading = () => dispatch({ type: SET_LOADING });
@@ -55,7 +69,9 @@ const GithubState = props => {
         users: state.users,
         repos: state.repos,
         loading: state.loading,
-        searchUsers
+        searchUsers,
+        clearUsers,
+        getUser
       }}
     >
       {props.children}
